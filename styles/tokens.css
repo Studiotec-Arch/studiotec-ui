@@ -1,0 +1,214 @@
+/* ============================================================
+   Studiotec — tokens da suíte Portal Studiotec
+
+   Importe UMA vez, antes das diretivas do Tailwind:
+
+     @import '@studiotec/ui/tokens.css';
+     @tailwind base;
+     @tailwind components;
+     @tailwind utilities;
+
+   Cores em tripla HSL, sem `hsl()`, para compor com alfa:
+   `hsl(var(--primary) / 0.1)`.
+
+   O tema escuro é o padrão do produto e é aplicado com `.dark` no <html>.
+   Todos os apps herdam a preferência do Portal Studiotec pela chave
+   `portal_theme` do localStorage, aplicada por script inline no <head> —
+   aplicar depois do bundle carregar faz a tela piscar clara.
+   ============================================================ */
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 9%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 9%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 9%;
+
+  --secondary: 0 0% 96%;
+  --secondary-foreground: 0 0% 9%;
+
+  --muted: 0 0% 96%;
+  --muted-foreground: 0 0% 45%;
+
+  --accent: 0 0% 96%;
+  --accent-foreground: 0 0% 9%;
+
+  /* Laranja-vermelho da marca (#F93F06). Não usar carmim: briga com o verde
+     do RC e com o ouro do RDO. */
+  --destructive: 14 96% 50%;
+  --destructive-foreground: 0 0% 100%;
+
+  /* Esmeralda de propósito, e não o verde da marca: em app cujo accent já é
+     verde, um `success` verde-marca some dentro da interface. */
+  --success: 142 70% 40%;
+  --success-foreground: 0 0% 100%;
+
+  --warning: 38 92% 50%;
+  --warning-foreground: 0 0% 100%;
+
+  /* Grafite neutro. Azul NÃO é cor semântica nesta suíte — ele existe só como
+     identidade de app, via --app-line. */
+  --info: 0 0% 40%;
+  --info-foreground: 0 0% 100%;
+
+  --border: 0 0% 90%;
+  --input: 0 0% 90%;
+
+  --sidebar-background: 0 0% 98%;
+  --sidebar-foreground: 0 0% 40%;
+  --sidebar-accent: 0 0% 94%;
+  --sidebar-accent-foreground: 0 0% 9%;
+  --sidebar-border: 0 0% 92%;
+
+  --severity-critical: 14 96% 50%;
+  --severity-high: 25 95% 53%;
+  --severity-medium: 38 92% 50%;
+  --severity-low: 142 70% 40%;
+
+  /* ---- Métrica ---- */
+  --radius: 0.375rem; /* 6px — base. sm 4 · md 6 · lg 8 · xl 12 */
+
+  --control-xs: 1.75rem; /* 28px */
+  --control-sm: 2rem;    /* 32px — padrão de botão */
+  --control-md: 2.25rem; /* 36px */
+  --control-lg: 2.5rem;  /* 40px */
+
+  --bar-height: 2.75rem;   /* 44px — topbar e cabeçalho do sidebar */
+  --sidebar-width: 13rem;  /* 208px */
+  --drawer-width: 16rem;   /* 256px — gaveta no celular */
+
+  /* Campo é mais alto que botão de propósito: 40px é alvo de toque confortável
+     no celular, onde a maior parte do preenchimento acontece. */
+  --field-height-mobile: 2.5rem;  /* 40px */
+  --field-height: 2.25rem;        /* 36px */
+
+  /* ---- Cor de identidade do app (contrato do Portal Studiotec) ----
+     Cada app declara a SUA cor sobrescrevendo --app-line no próprio CSS,
+     depois de importar este arquivo. Ela pinta:
+       · a linha que separa o sidebar do corpo
+       · a linha abaixo do logo e sob a topbar
+       · o título do app no sidebar
+       · o accent (primary, ring, sidebar-primary)
+
+     Os shells dos portais são propositalmente parecidos: é a cor das linhas,
+     mais o título, que diz ao usuário em qual app ele está.
+
+     Em uso: Portal RC = verde da marca · Portal RDO = ouro 42 74% 45% ·
+     Knowhow = azul aço 211 62% 55%.
+
+     O padrão abaixo é o verde da marca — o caso-base.
+
+     --app-line-foreground é SEMPRE quase-preto: branco sobre o verde #78BE20
+     dá 2,2:1 e reprova em AA; quase-preto dá 8,2:1. A regra vale para as três
+     cores em uso, então é constante e não derivada por app. */
+  --app-line: 87 71% 44%;
+  --app-line-foreground: 0 0% 9%;
+}
+
+.dark {
+  --background: 240 6% 6%;
+  --foreground: 0 0% 90%;
+
+  --card: 240 5% 9%;
+  --card-foreground: 0 0% 90%;
+
+  --popover: 240 5% 9%;
+  --popover-foreground: 0 0% 90%;
+
+  --secondary: 240 4% 14%;
+  --secondary-foreground: 0 0% 90%;
+
+  --muted: 240 4% 14%;
+  --muted-foreground: 0 0% 50%;
+
+  --accent: 240 4% 14%;
+  --accent-foreground: 0 0% 90%;
+
+  --destructive: 14 97% 56%;
+  --destructive-foreground: 0 0% 100%;
+
+  /* Saturação contida: 145 100% 50% é verde-neon puro e seria o único ponto
+     de saturação máxima da interface escura. */
+  --success: 145 60% 48%;
+  --success-foreground: 0 0% 100%;
+
+  --warning: 38 100% 55%;
+  --warning-foreground: 0 0% 100%;
+
+  --info: 0 0% 65%;
+  --info-foreground: 0 0% 9%;
+
+  --border: 240 4% 26%;
+  --input: 240 4% 26%;
+
+  /* Mesmo valor do --background: sidebar e corpo formam uma superfície grafite
+     contínua. Um degrau de 1% cria uma emenda que nem separa as regiões nem
+     passa despercebida. */
+  --sidebar-background: 240 6% 6%;
+  --sidebar-foreground: 0 0% 55%;
+  --sidebar-accent: 240 5% 10%;
+  --sidebar-accent-foreground: 0 0% 85%;
+  --sidebar-border: 240 4% 26%;
+
+  --severity-critical: 14 97% 56%;
+  --severity-high: 25 100% 58%;
+  --severity-medium: 38 100% 55%;
+  --severity-low: 145 60% 48%;
+
+  --app-line: 87 68% 48%;
+  --app-line-foreground: 0 0% 9%;
+}
+
+/* ============================================================
+   ACCENT = COR DO APP
+
+   Precisa vir por último, depois de :root E de .dark. Os dois blocos acima
+   declaram as cores de marca, e entre regras de mesma especificidade a última
+   vence. Colocar este bloco antes do .dark faz o accent seguir a cor do app
+   só no tema claro — no escuro ele volta ao verde, silenciosamente.
+   ============================================================ */
+:root,
+.dark {
+  --primary: var(--app-line);
+  --primary-foreground: var(--app-line-foreground);
+  --ring: var(--app-line);
+  --sidebar-primary: var(--app-line);
+  --sidebar-primary-foreground: var(--app-line-foreground);
+  --sidebar-ring: var(--app-line);
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+* {
+  border-color: hsl(var(--border));
+}
+
+body {
+  font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-size: 0.875rem; /* 14px — o corpo da suíte */
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+/* O Safari do iOS dá zoom automático ao focar um campo com fonte abaixo de
+   16px, e o layout inteiro desloca. Esta regra é a rede de segurança; os
+   componentes também sobem para 16px no celular por conta própria.
+   NÃO reduzir. */
+@media (max-width: 767px) {
+  input:not([type='checkbox']):not([type='radio']):not([type='file']),
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+}
