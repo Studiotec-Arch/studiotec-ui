@@ -7,12 +7,12 @@ Este pacote existe porque cada app mantinha sua própria cópia dos mesmos arqui
 ## Instalação
 
 ```bash
-npm install git+https://github.com/Studiotec-Arch/studiotec-ui.git#v1.0.0
+npm install git+https://github.com/Studiotec-Arch/studiotec-ui.git#v1.0.1
 ```
 
 Sempre com tag, nunca `#main` — é o que torna o build reprodutível.
 
-Peer dependencies (os apps da suíte já têm todas): `react`, `react-dom`, `@radix-ui/react-select`, `@radix-ui/react-slot`, `lucide-react`.
+Peer dependencies (os apps da suíte já têm todas): `react`, `react-dom`, `tailwindcss`, `@radix-ui/react-select`, `@radix-ui/react-slot`, `lucide-react`.
 
 > **Docker:** o estágio de build precisa da imagem `node:22` completa, não `node:22-slim` — o npm usa `git` para resolver a tag. E é preciso reescrever a URL, porque o npm normaliza GitHub para `git+ssh` no lockfile e não há chave SSH dentro do container:
 >
@@ -92,7 +92,7 @@ Três coisas aqui vieram de problemas reais em produção. Se alguém "limpar" q
 
 **O campo tem preenchimento, não fundo transparente.** O desenho original era transparente com hairline de 1px. No celular, sobre grafite, uma borda a 26% de luminância simplesmente não se vê — o usuário não achava o campo. É o `bg-muted/45` que delimita, não a borda.
 
-**`text-base` nos campos é 16px e trava o zoom do iOS.** Abaixo de 16px o Safari dá zoom automático ao focar e desloca o layout inteiro. Por isso os campos são `text-base md:text-[13px]`: `text-base` ali é mecanismo, não escolha tipográfica. O corpo do produto é `text-sm` (14px). `tokens.css` ainda traz uma media query com `!important` como rede de segurança.
+**`text-base` nos campos é 16px e trava o zoom do iOS.** Abaixo de 16px o Safari dá zoom automático ao focar e desloca o layout inteiro. Por isso os campos são `text-base md:text-[13px]`: `text-base` ali é mecanismo, não escolha tipográfica. O corpo do produto é `text-sm` (14px). O preset ainda injeta uma media query com `!important` como rede de segurança.
 
 **Os estilos base vivem no preset, não no `tokens.css`.** `@import` é içado para o topo do arquivo do app, acima do `@tailwind base` — uma regra `* { border-color }` escrita no `tokens.css` sai antes do preflight do Tailwind, que também declara `border-color` no seletor universal, e o preflight vence. O sintoma é discreto: as bordas caem para o cinza padrão, inclusive no tema escuro. Por isso o preset injeta `border-color`, `body`, headings e a regra dos 16px com `addBase`, que entra depois do preflight. **Aplicar o preset não é opcional** — sem ele o `tokens.css` sozinho não veste o app.
 
