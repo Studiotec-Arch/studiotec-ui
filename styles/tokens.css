@@ -88,7 +88,20 @@
   --drawer-width: 16rem;   /* 256px — gaveta no celular */
 
   /* Campo é mais alto que botão de propósito: 40px é alvo de toque confortável
-     no celular, onde a maior parte do preenchimento acontece. */
+     no celular, onde a maior parte do preenchimento acontece; 36px no desktop,
+     para alinhar com os botões da mesma linha.
+
+     A variação por tamanho de tela mora AQUI, e não numa classe `md:` dentro do
+     componente. Motivo: `cn()` usa tailwind-merge, e ele não considera `h-8` e
+     `md:h-9` o mesmo grupo — então um `className="h-7"` do app removia o `h-10`
+     mas o `md:h-9` sobrevivia e vencia no desktop. Toda caixa de busca com
+     altura customizada virava 36px sem ninguém pedir. Com o valor num
+     custom property, o componente usa uma classe só (`h-[var(--field-h)]`) e o
+     override do app ganha limpo. */
+  --field-h: 2.5rem;      /* 40px no celular */
+  --field-text: 1rem;     /* 16px — trava o zoom do iOS */
+
+  /* Mantidos como apelido legível para CSS de app. */
   --field-height-mobile: 2.5rem;  /* 40px */
   --field-height: 2.25rem;        /* 36px */
 
@@ -203,3 +216,13 @@
    entra na camada base depois do preflight. Aplicar o preset não
    é opcional: sem ele, este arquivo sozinho não veste o app.
    ============================================================ */
+
+/* Acima de 768px o campo encolhe e o texto volta ao corpo compacto. Fica no
+   arquivo de tokens, e não no componente, para o override do app vencer —
+   ver a nota em --field-h. */
+@media (min-width: 768px) {
+  :root {
+    --field-h: 2.25rem;      /* 36px */
+    --field-text: 0.8125rem; /* 13px */
+  }
+}

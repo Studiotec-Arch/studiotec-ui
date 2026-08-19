@@ -7,7 +7,7 @@ Este pacote existe porque cada app mantinha sua própria cópia dos mesmos arqui
 ## Instalação
 
 ```bash
-npm install git+https://github.com/Studiotec-Arch/studiotec-ui.git#v1.0.3
+npm install git+https://github.com/Studiotec-Arch/studiotec-ui.git#v1.0.4
 ```
 
 Sempre com tag, nunca `#main` — é o que torna o build reprodutível.

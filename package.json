@@ -1,6 +1,6 @@
 {
   "name": "@studiotec/ui",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Primitivos de UI, preset do Tailwind e tokens da suíte Portal Studiotec.",
   "license": "UNLICENSED",
   "repository": {
