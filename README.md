@@ -98,6 +98,10 @@ Três coisas aqui vieram de problemas reais em produção. Se alguém "limpar" q
 
 **Os estilos base vivem no preset, não no `tokens.css`.** `@import` é içado para o topo do arquivo do app, acima do `@tailwind base` — uma regra `* { border-color }` escrita no `tokens.css` sai antes do preflight do Tailwind, que também declara `border-color` no seletor universal, e o preflight vence. O sintoma é discreto: as bordas caem para o cinza padrão, inclusive no tema escuro. Por isso o preset injeta `border-color`, `body`, headings e a regra dos 16px com `addBase`, que entra depois do preflight. **Aplicar o preset não é opcional** — sem ele o `tokens.css` sozinho não veste o app.
 
+**Nada de variante responsiva (`md:`) no `className` base de um componente.** O `cn()` usa `tailwind-merge`, e ele não trata `h-10` e `md:h-9` como o mesmo grupo — um `className="h-7"` vindo do app remove o `h-10` e deixa o `md:h-9` vivo, que então vence acima de 768px. O override do app é silenciosamente ignorado no desktop. Foi assim que toda caixa de busca da suíte virou 36px e passou a encostar nas linhas das tabelas.
+
+Quando o valor precisar variar por tamanho de tela, coloque a media query no **token** (`--field-h`, `--field-text` em `tokens.css`) e use uma classe só no componente: `h-[var(--field-h)]`. Aí o `tailwind-merge` resolve o conflito e o app ganha.
+
 **O bloco que amarra o accent ao `--app-line` fica no fim do `tokens.css`.** Depois de `:root` **e** de `.dark`. Entre regras de mesma especificidade a última vence — colocá-lo antes do `.dark` faz o accent seguir a cor do app só no tema claro, e no escuro ele volta ao verde sem erro nenhum.
 
 ## Versionamento
