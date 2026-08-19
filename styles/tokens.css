@@ -180,35 +180,19 @@
   --sidebar-ring: var(--app-line);
 }
 
+
 /* ============================================================
-   Base
+   Os estilos base — border-color no seletor universal, body,
+   headings e a regra dos 16px no celular — NÃO ficam aqui.
+
+   `@import` é içado para o topo do arquivo do app, acima do
+   `@tailwind base`. Uma regra `* { border-color }` escrita neste
+   arquivo é emitida antes do preflight do Tailwind, que também
+   declara border-color no seletor universal — e o preflight vence.
+   O sintoma é discreto: as bordas caem para o cinza padrão do
+   Tailwind, inclusive no tema escuro.
+
+   Por isso eles vivem no preset, injetados com `addBase`, que
+   entra na camada base depois do preflight. Aplicar o preset não
+   é opcional: sem ele, este arquivo sozinho não veste o app.
    ============================================================ */
-* {
-  border-color: hsl(var(--border));
-}
-
-body {
-  font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  font-size: 0.875rem; /* 14px — o corpo da suíte */
-  background-color: hsl(var(--background));
-  color: hsl(var(--foreground));
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 500;
-  letter-spacing: -0.02em;
-}
-
-/* O Safari do iOS dá zoom automático ao focar um campo com fonte abaixo de
-   16px, e o layout inteiro desloca. Esta regra é a rede de segurança; os
-   componentes também sobem para 16px no celular por conta própria.
-   NÃO reduzir. */
-@media (max-width: 767px) {
-  input:not([type='checkbox']):not([type='radio']):not([type='file']),
-  textarea,
-  select {
-    font-size: 16px !important;
-  }
-}

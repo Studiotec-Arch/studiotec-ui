@@ -94,6 +94,8 @@ Três coisas aqui vieram de problemas reais em produção. Se alguém "limpar" q
 
 **`text-base` nos campos é 16px e trava o zoom do iOS.** Abaixo de 16px o Safari dá zoom automático ao focar e desloca o layout inteiro. Por isso os campos são `text-base md:text-[13px]`: `text-base` ali é mecanismo, não escolha tipográfica. O corpo do produto é `text-sm` (14px). `tokens.css` ainda traz uma media query com `!important` como rede de segurança.
 
+**Os estilos base vivem no preset, não no `tokens.css`.** `@import` é içado para o topo do arquivo do app, acima do `@tailwind base` — uma regra `* { border-color }` escrita no `tokens.css` sai antes do preflight do Tailwind, que também declara `border-color` no seletor universal, e o preflight vence. O sintoma é discreto: as bordas caem para o cinza padrão, inclusive no tema escuro. Por isso o preset injeta `border-color`, `body`, headings e a regra dos 16px com `addBase`, que entra depois do preflight. **Aplicar o preset não é opcional** — sem ele o `tokens.css` sozinho não veste o app.
+
 **O bloco que amarra o accent ao `--app-line` fica no fim do `tokens.css`.** Depois de `:root` **e** de `.dark`. Entre regras de mesma especificidade a última vence — colocá-lo antes do `.dark` faz o accent seguir a cor do app só no tema claro, e no escuro ele volta ao verde sem erro nenhum.
 
 ## Versionamento

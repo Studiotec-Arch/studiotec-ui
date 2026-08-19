@@ -24,9 +24,52 @@
  * classes usadas dentro dos componentes do pacote e elas somem do CSS final.
  */
 
+import plugin from 'tailwindcss/plugin';
+
+/**
+ * Estilos base da suíte.
+ *
+ * Ficam aqui, e não no tokens.css, por uma razão mecânica: `@import` é içado
+ * para o topo do arquivo, acima do `@tailwind base`. Uma regra `* {
+ * border-color }` escrita no tokens.css é emitida ANTES do preflight, e o
+ * preflight — que também declara `border-color` no seletor universal — vence.
+ * O sintoma é discreto e fácil de não notar: as bordas caem para o cinza
+ * padrão do Tailwind, inclusive no tema escuro.
+ *
+ * `addBase` entra na camada base DEPOIS do preflight, que é o que resolve.
+ */
+const base = plugin(({ addBase }) => {
+  addBase({
+    '*, ::before, ::after': {
+      borderColor: 'hsl(var(--border))',
+    },
+    body: {
+      fontFamily: "'Geist', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+      fontSize: '0.875rem', // 14px — o corpo da suíte
+      backgroundColor: 'hsl(var(--background))',
+      color: 'hsl(var(--foreground))',
+      WebkitFontSmoothing: 'antialiased',
+      MozOsxFontSmoothing: 'grayscale',
+    },
+    'h1, h2, h3, h4, h5, h6': {
+      fontWeight: '500',
+      letterSpacing: '-0.02em',
+    },
+    // O Safari do iOS dá zoom automático ao focar um campo com fonte abaixo de
+    // 16px, e o layout inteiro desloca. Rede de segurança: os componentes já
+    // sobem para 16px no celular por conta própria. NÃO reduzir.
+    '@media (max-width: 767px)': {
+      "input:not([type='checkbox']):not([type='radio']):not([type='file']), textarea, select": {
+        fontSize: '16px !important',
+      },
+    },
+  });
+});
+
 /** @type {import('tailwindcss').Config} */
 const preset = {
   darkMode: ['class'],
+  plugins: [base],
   theme: {
     container: {
       center: true,
