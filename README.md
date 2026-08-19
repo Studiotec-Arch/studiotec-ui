@@ -7,7 +7,7 @@ Este pacote existe porque cada app mantinha sua própria cópia dos mesmos arqui
 ## Instalação
 
 ```bash
-npm install git+https://github.com/Studiotec-Arch/studiotec-ui.git#v1.0.2
+npm install git+https://github.com/Studiotec-Arch/studiotec-ui.git#v1.0.3
 ```
 
 Sempre com tag, nunca `#main` — é o que torna o build reprodutível.
@@ -65,7 +65,7 @@ Cada app declara a sua, depois do import:
 
 Ela pinta as duas linhas de moldura, o título do app no sidebar e o accent (`primary`, `ring`, `sidebar-primary`). Os shells são propositalmente parecidos: é a cor das linhas, mais o título, que diz ao usuário em qual app ele está.
 
-Em uso hoje: **Portal RC** verde da marca · **Portal RDO** ouro `42 74% 45%` · **Knowhow** azul aço `211 62% 55%`.
+Em uso hoje: **Portal RC** verde da marca · **Portal RDO** ouro `42 74% 45%` · **Knowledge** azul aço `211 62% 55%`.
 
 `--app-line-foreground` já vem resolvido e é sempre quase-preto — não sobrescreva. Branco sobre o verde `#78BE20` dá 2,2:1 e reprova em AA.
 

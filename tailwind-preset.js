@@ -4,7 +4,7 @@
  * Existe para que `text-sm`, `rounded-md` e `bg-primary` signifiquem a mesma
  * coisa em todos os apps. Antes deste preset, cada projeto mantinha sua própria
  * cópia do `tailwind.config.ts` e elas divergiram em silêncio: `rounded-md`
- * valia 4px no Portal RC e 6px no Knowhow; `text-sm` valia 14px num e 13px no
+ * valia 4px no Portal RC e 6px no Knowledge; `text-sm` valia 14px num e 13px no
  * outro. Ninguém percebeu porque a classe era a mesma.
  *
  * Uso:
