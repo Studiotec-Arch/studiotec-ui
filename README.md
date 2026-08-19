@@ -14,14 +14,16 @@ Sempre com tag, nunca `#main` — é o que torna o build reprodutível.
 
 Peer dependencies (os apps da suíte já têm todas): `react`, `react-dom`, `tailwindcss`, `@radix-ui/react-select`, `@radix-ui/react-slot`, `lucide-react`.
 
-> **Docker:** o estágio de build precisa da imagem `node:22` completa, não `node:22-slim` — o npm usa `git` para resolver a tag. E é preciso reescrever a URL, porque o npm normaliza GitHub para `git+ssh` no lockfile e não há chave SSH dentro do container:
+> **Docker:** o `npm install` funciona em `node:22-slim`, sem git — para dependências hospedadas no GitHub o npm baixa um tarball por HTTPS em vez de clonar. É o que o Knowledge faz, e foi verificado com `docker build --no-cache` e `node_modules` fora do contexto.
+>
+> Portal RC e Portal RDO usam a imagem `node:22` completa mais uma reescrita de URL:
 >
 > ```dockerfile
 > RUN git config --global url."https://github.com/".insteadOf ssh://git@github.com/ \
 >  && npm install
 > ```
 >
-> É o mesmo tratamento que `@studiotec-arch/image-compress` já recebe.
+> Isso é herança de `@studiotec-arch/image-compress` e continua correto — só não é obrigatório. Se um build seu falhar reclamando de git ou de chave SSH, é essa a receita.
 
 ## Uso
 
